@@ -92,7 +92,15 @@ class McpServerIntegrationTest {
                 mcp.connect(StreamableHttpClientTransport(
                     http, url = "http://127.0.0.1:$testPort/mcp"
                 ))
-                assertTrue(mcp.listTools().tools.any { it.name == "url_encode" })
+                val tools = mcp.listTools().tools
+                assertTrue(tools.any { it.name == "url_encode" })
+                assertTrue(tools.all { tool ->
+                    tool.annotations?.let {
+                        it.readOnlyHint != null && it.destructiveHint != null && it.openWorldHint != null
+                    } == true
+                })
+                assertEquals(true, tools.single { it.name == "send_http1_request" }.annotations?.destructiveHint)
+                assertEquals(true, tools.single { it.name == "send_http1_request" }.annotations?.openWorldHint)
                 val result = mcp.callTool("url_encode", mapOf("content" to "hello world"))
                 assertEquals(false, result.isError ?: false)
                 assertEquals("hello+world", (result.content.single() as io.modelcontextprotocol.kotlin.sdk.types.TextContent).text)

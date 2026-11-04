@@ -135,7 +135,7 @@ tasks {
         description = "Embeds the MCP proxy JAR into the shadow JAR"
         dependsOn(shadowJar)
         shadowJarFile.set(shadowJar.flatMap { it.archiveFile })
-        proxyJarFile.set(layout.projectDirectory.file("libs/mcp-proxy-all.jar"))
+        proxyJarFile.set(layout.projectDirectory.file("plugins/burp-suite/server/mcp-proxy-all.jar"))
     }
 
     build {
@@ -157,6 +157,7 @@ tasks.register<Zip>("codexPluginZip") {
     group = "distribution"
     description = "Packages the Codex plugin for the local Burp MCP server"
     from(layout.projectDirectory.dir("plugins/burp-suite"))
+    from(layout.projectDirectory.file("LICENSE"))
     archiveFileName.set("burp-suite-codex-plugin.zip")
     destinationDirectory.set(layout.buildDirectory.dir("distributions"))
 }
