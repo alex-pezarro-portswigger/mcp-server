@@ -129,6 +129,15 @@ eye on Burp while Codex works, or use the auto-approve options in the `MCP` tab.
 also need Codex itself to allow the tool calls, for example with `default_tools_approval_mode = "approve"` under
 `[mcp_servers.burp]`.
 
+#### Codex skill
+
+`skills/burp-mcp/SKILL.md` teaches Codex how to use the tools: which to reach for, how the approval prompts
+behave and what to do when a call hangs. Install it by copying the folder into `~/.codex/skills/`:
+
+```bash
+cp -r skills/burp-mcp ~/.codex/skills/
+```
+
 ## Manual installations
 If you want to install the MCP server manually you can either use the extension's SSE server directly or the packaged
 Stdio proxy server.
