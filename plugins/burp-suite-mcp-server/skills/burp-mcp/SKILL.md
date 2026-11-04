@@ -13,13 +13,8 @@ Proxy history, real Repeater tabs. Treat every call as acting on their live test
 Burp must be running with the MCP Server extension loaded and **Enabled** ticked in its `MCP` tab.
 The server listens on `http://127.0.0.1:9876` by default (host and port are configurable in the `MCP` tab).
 
-Codex connects over Streamable HTTP at `/mcp`:
-
-```bash
-codex mcp add burp --url http://127.0.0.1:9876/mcp
-```
-
-Equivalent `~/.codex/config.toml`:
+Codex connects over Streamable HTTP at `/mcp`. The Burp Suite MCP Server plugin configures this for you. Without
+the plugin, or to use a different host or port, set it in `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.burp]
@@ -54,7 +49,8 @@ Do not retry a denied call; ask the user.
 
 Codex has its own approval layer too. Interactive sessions prompt for each `burp` tool call. Under
 `codex exec` the calls are rejected (`MCP tool call requires approval`) unless the server entry sets
-`default_tools_approval_mode = "approve"`.
+`default_tools_approval_mode = "approve"`. When overriding the plugin's server in `config.toml`, give the full
+entry including `url`; an entry with only the approval mode fails with `invalid transport`.
 
 ## Tools by task
 
